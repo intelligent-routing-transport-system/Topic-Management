@@ -21,14 +21,14 @@ namespace Topic_Manager.Kafka
             ProducerConfig config = new ProducerConfig
             {
                 BootstrapServers = ConnectionString,
-                Acks = Acks.All
+                Acks = Acks.All,
             };
 
             var p = new ProducerBuilder<string, T>(config).Build();
             var dr = await p.ProduceAsync(Topic, new Message<string, T>
             {
                 Value = Value,
-                Key = Guid.NewGuid().ToString()
+                Key = "TESTE"
             });
 
             return $"Mensagem enviada com sucesso: {dr.Value} | Partition: {dr.Partition} | {dr.Topic}";
