@@ -31,7 +31,7 @@ namespace Topic_Manager.Controllers
                 var messageSend = "";
                 string kafkaConnectionString = _configuration.GetConnectionString("KafkaConnection");
 
-                byte[] messages = Encoding.ASCII.GetBytes(message.Payload);
+                byte[] messages = JsonSerializer.SerializeToUtf8Bytes(message.Payload);
 
                 using (var producer = new ProducerMessage<byte[]>(messages, message.TopicName, kafkaConnectionString))
                 {
