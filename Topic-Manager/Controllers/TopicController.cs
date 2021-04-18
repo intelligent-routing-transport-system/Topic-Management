@@ -8,6 +8,7 @@ using System.Text.Json;
 using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.Text;
+using System;
 
 namespace Topic_Manager.Controllers
 {
@@ -39,7 +40,7 @@ namespace Topic_Manager.Controllers
                 }
                 return Ok(message.Payload);
             }
-            catch (System.Exception e)
+            catch (Exception e)
             {
                 throw;
             }
@@ -48,7 +49,7 @@ namespace Topic_Manager.Controllers
         [HttpGet]
         public ActionResult Get()
         {
-            return Ok("helthcheck");
+            return Ok("helthcheck" + DateTime.Now.ToString());
         }
     }
 }
