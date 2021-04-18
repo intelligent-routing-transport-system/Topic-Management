@@ -49,7 +49,7 @@ namespace Topic_Manager.Controllers
         [HttpGet]
         public ActionResult Get()
         {
-            return Ok("helthcheck" + DateTime.Now.ToString());
+            return Ok("helthcheck: " + DateTime.Now.ToString());
         }
     }
 }
