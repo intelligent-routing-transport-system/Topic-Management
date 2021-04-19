@@ -47,7 +47,7 @@ jobs:
         echo "Pushing image to ECR..."
         docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
         echo "::set-output name=image::$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG"
-        aws ecs update-service --cluster ecs-tcc-apis --service ecs-service-topic-manager --task-definition arn:aws:ecs:us-east-2:423278355062:task-definition/task-topic-manager
+        aws ecs update-service --cluster ecs-tcc-apis --service ecs-service-topic-manager --task-definition task-topic-manager --force-new-deployment
 
   #     Copiar arquivos do build para a EC2 da AWS
   #     - name: Copy files to AWS EC2
