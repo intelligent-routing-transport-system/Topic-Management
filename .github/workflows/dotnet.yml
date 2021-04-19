@@ -47,6 +47,8 @@ jobs:
         echo "Pushing image to ECR..."
         docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
         echo "::set-output name=image::$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG"
+        OLD_TASK_ID=$(aws ecs list-tasks --cluster ${ecs-tcc-apis} --desired-status RUNNING --family ${task-topic-manager:7} | egrep "task/" | sed -E "s/.*task\/(.*)\"/\1/")
+        aws ecs stop-task --cluster ${ecs-tcc-apis} --task ${OLD_TASK_ID}
         aws ecs update-service --cluster ecs-tcc-apis --service ecs-service-topic-manager --force-new-deployment
 
   #     Copiar arquivos do build para a EC2 da AWS
