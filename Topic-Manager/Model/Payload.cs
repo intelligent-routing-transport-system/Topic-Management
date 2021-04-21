@@ -7,7 +7,16 @@ namespace Topic_Manager.Model
 {
     public class Payload
     {
-        public double[] Coords { get; set; }
-        public string Value { get; set; }
+        public class Coord
+        {
+            public double Latitude { get; set; }
+
+            public double Longitude { get; set; }
+        }
+
+        public string SensorId { get; set; }
+        public Coord Coords { get; set; }
+        public double ValueToCompare { get; set; }
+        public double Value { get; set; }
     }
 }
