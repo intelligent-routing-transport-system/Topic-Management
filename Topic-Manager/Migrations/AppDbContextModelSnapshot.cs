@@ -22,6 +22,9 @@ namespace TopicManager.Migrations
                     b.Property<string>("Id")
                         .HasColumnType("varchar(255) CHARACTER SET utf8mb4");
 
+                    b.Property<double>("ActionRadius")
+                        .HasColumnType("double");
+
                     b.Property<DateTime>("CreateAt")
                         .HasColumnType("datetime(6)");
 

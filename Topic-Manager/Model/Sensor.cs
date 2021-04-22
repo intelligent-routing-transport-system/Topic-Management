@@ -28,6 +28,9 @@ namespace Topic_Manager.Model
         public string TopicName { get; set; }
 
         [Required]
+        public double ActionRadius { get; set; }
+
+        [Required]
         public double Latitude { get; set; }
 
         [Required]

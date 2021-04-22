@@ -16,6 +16,7 @@ namespace Topic_Manager.Model
 
         public string SensorId { get; set; }
         public Coord Coords { get; set; }
+        public double ActionRadius { get; set; }
         public double ValueToCompare { get; set; }
         public double Value { get; set; }
     }

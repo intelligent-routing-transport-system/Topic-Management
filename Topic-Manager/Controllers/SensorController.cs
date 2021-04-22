@@ -35,6 +35,7 @@ namespace Topic_Manager.Controllers
                 TopicName = sensor.TopicName,
                 Description = sensor.Description,
                 Type = sensor.Type,
+                ActionRadius = sensor.ActionRadius,
                 Latitude = sensor.Latitude,
                 Longitude = sensor.Longitude,
                 ValueToCompare = sensor.ValueToCompare,

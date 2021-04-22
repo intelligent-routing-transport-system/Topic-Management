@@ -16,6 +16,7 @@ namespace TopicManager.Migrations
                     Description = table.Column<string>(nullable: false),
                     ValueToCompare = table.Column<double>(nullable: false),
                     TopicName = table.Column<string>(nullable: false),
+                    ActionRadius = table.Column<double>(nullable: false),
                     Latitude = table.Column<double>(nullable: false),
                     Longitude = table.Column<double>(nullable: false),
                     CreateAt = table.Column<DateTime>(nullable: false)

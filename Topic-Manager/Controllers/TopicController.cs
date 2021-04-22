@@ -40,6 +40,7 @@ namespace Topic_Manager.Controllers
                 {
                     Coords = new Payload.Coord { Latitude = sensorDatabase.Latitude, Longitude = sensorDatabase.Longitude },
                     SensorId = sensorDatabase.Id,
+                    ActionRadius = sensorDatabase.ActionRadius,
                     ValueToCompare = sensorDatabase.ValueToCompare,
                     Value = payloadDTO.Value,
                 };

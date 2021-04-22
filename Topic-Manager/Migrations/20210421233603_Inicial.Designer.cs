@@ -9,7 +9,7 @@ using Topic_Manager.Context;
 namespace TopicManager.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20210421165454_Inicial")]
+    [Migration("20210421233603_Inicial")]
     partial class Inicial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -23,6 +23,9 @@ namespace TopicManager.Migrations
                 {
                     b.Property<string>("Id")
                         .HasColumnType("varchar(255) CHARACTER SET utf8mb4");
+
+                    b.Property<double>("ActionRadius")
+                        .HasColumnType("double");
 
                     b.Property<DateTime>("CreateAt")
                         .HasColumnType("datetime(6)");
