@@ -44,4 +44,7 @@ jobs:
         port: ${{ secrets.SSH_PORT }}
         script: |
           cd api/api-topic-manager
-          dotnet ef database update
+          docker build -t topic-manager .
+          docker stop topic-manager
+          docker rm topic-manager
+          docker container run -p 5005:5005 --name topic-manager -d topic-manager
