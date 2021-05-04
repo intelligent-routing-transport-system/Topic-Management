@@ -9,6 +9,8 @@ using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.Text;
 using System;
+using Topic_Manager.Repository.UnityOfWork;
+using Topic_Manager.Model.DTOs;
 
 namespace Topic_Manager.Controllers
 {
@@ -17,28 +19,40 @@ namespace Topic_Manager.Controllers
     public class TopicController : ControllerBase
     {
         private readonly IConfiguration _configuration;
+        private readonly IUnityOfWork _uof;
 
-        public TopicController(IConfiguration configuration)
+        public TopicController(IConfiguration configuration, IUnityOfWork uof)
         {
             _configuration = configuration;
+            _uof = uof;
         }
 
         [HttpPost]
-        public async Task<ActionResult> CreateMessage([FromBody] MessageBody message)
+        public async Task<ActionResult> CreateMessage([FromBody] PayloadDTO payloadDTO)
         {
             try
             {
-                var messageSend = "";
                 string kafkaConnectionString = _configuration.GetConnectionString("KafkaConnection");
 
-                byte[] messages = JsonSerializer.SerializeToUtf8Bytes(message.Payload);
+                var sensorDatabase = _uof.SensorRepository.GetById(x => x.Id == payloadDTO.SensorId).Result;
 
-                using (var producer = new ProducerMessage<byte[]>(messages, message.TopicName, kafkaConnectionString))
+                Payload payload = new Payload()
                 {
-                    messageSend = await producer.Run();
-                    Debug.WriteLine(messageSend);
+                    Coords = new Payload.Coord { Latitude = sensorDatabase.Latitude, Longitude = sensorDatabase.Longitude },
+                    SensorId = sensorDatabase.Id,
+                    ActionRadius = sensorDatabase.ActionRadius,
+                    ValueToCompare = sensorDatabase.ValueToCompare,
+                    Value = payloadDTO.Value,
+                };
+
+                byte[] messages = JsonSerializer.SerializeToUtf8Bytes(payload);
+
+                using (var producer = new ProducerMessage<byte[]>(messages, sensorDatabase.TopicName, kafkaConnectionString))
+                {
+                    var messageInformations = await producer.Run();
+                    Debug.WriteLine(messageInformations);
                 }
-                return Ok(message.Payload);
+                return Ok(payload);
             }
             catch (Exception e)
             {
