@@ -5,6 +5,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
+using System;
 using System.Linq;
 using Topic_Manager.Context;
 using Topic_Manager.Repository.UnityOfWork;
@@ -26,7 +27,7 @@ namespace Topic_Manager
             services.AddScoped<IUnityOfWork, UnityOfWork>();
 
             services.AddDbContext<AppDbContext>(options =>
-                options.UseNpgsql(Configuration.GetConnectionString("DefaultConnection")));
+                options.UseNpgsql(Configuration.GetConnectionString("DefaultConnection"), x => x.EnableRetryOnFailure(5, TimeSpan.FromSeconds(10), null)));
 
             services.AddControllers();
             services.AddSwaggerGen(c =>

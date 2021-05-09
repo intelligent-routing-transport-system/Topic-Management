@@ -11,6 +11,8 @@ using System.Text;
 using System;
 using Topic_Manager.Repository.UnityOfWork;
 using Topic_Manager.Model.DTOs;
+using System.Linq;
+using Microsoft.EntityFrameworkCore;
 
 namespace Topic_Manager.Controllers
 {
@@ -32,12 +34,17 @@ namespace Topic_Manager.Controllers
         {
             try
             {
+                Console.WriteLine("Final Version");
                 string kafkaConnectionString = _configuration.GetConnectionString("KafkaConnection");
 
                 Console.WriteLine("### Start get sensor by id in Database - " + DateTime.Now.ToString() + "###");
-                var sensorDatabase = _uof.SensorRepository.GetById(x => x.Id == payloadDTO.SensorId).Result;
+                var sensorDatabase = await _uof.SensorRepository.Get().Where(x => x.Id == payloadDTO.SensorId).FirstOrDefaultAsync();
                 Console.WriteLine("### Finish get sensor by id in Database - " + DateTime.Now.ToString() + "###");
 
+                if (sensorDatabase == null)
+                {
+                    return Ok("Sensor not found");
+                }
                 Payload payload = new Payload()
                 {
                     Coords = new Payload.Coord { Latitude = sensorDatabase.Latitude, Longitude = sensorDatabase.Longitude },
