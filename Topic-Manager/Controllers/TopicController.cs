@@ -34,7 +34,9 @@ namespace Topic_Manager.Controllers
             {
                 string kafkaConnectionString = _configuration.GetConnectionString("KafkaConnection");
 
+                Console.WriteLine("### Start get sensor by id in Database - " + DateTime.Now.ToString() + "###");
                 var sensorDatabase = _uof.SensorRepository.GetById(x => x.Id == payloadDTO.SensorId).Result;
+                Console.WriteLine("### Finish get sensor by id in Database - " + DateTime.Now.ToString() + "###");
 
                 Payload payload = new Payload()
                 {
@@ -47,13 +49,14 @@ namespace Topic_Manager.Controllers
 
                 byte[] messages = JsonSerializer.SerializeToUtf8Bytes(payload);
 
+                Console.WriteLine("### Start producer message for Kafka - " + DateTime.Now.ToString() + "###");
                 using (var producer = new ProducerMessage<byte[]>(messages, sensorDatabase.TopicName, kafkaConnectionString))
                 {
                     var messageInformations = await producer.Run();
                     Debug.WriteLine(messageInformations);
                     producer.Dispose();
-                }                
-
+                }
+                Console.WriteLine("### Finish producer message for Kafka - " + DateTime.Now.ToString() + "###");
                 return Ok(payload);
             }
             catch (Exception e)

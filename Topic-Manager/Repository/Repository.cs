@@ -24,7 +24,6 @@ namespace Topic_Manager.Repository
         {
             return await _context.Set<T>().SingleOrDefaultAsync(predicate);
         }
-
         public void Add(T entity)
         {
             _context.Set<T>().Add(entity);
