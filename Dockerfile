@@ -3,6 +3,5 @@ LABEL version="1.0" maintainer="TCC"
 WORKDIR /app
 COPY ./dist .
 ENV ASPNETCORE_URLS=http://+:5005
-EXPOSE 3306
 EXPOSE 5005
 ENTRYPOINT ["dotnet", "Topic-Manager.dll"]
