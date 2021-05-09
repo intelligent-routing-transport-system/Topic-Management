@@ -43,8 +43,10 @@ namespace Topic_Manager.Controllers
 
                 if (sensorDatabase == null)
                 {
+                    Console.WriteLine("Sensor not found");
                     return Ok("Sensor not found");
                 }
+
                 Payload payload = new Payload()
                 {
                     Coords = new Payload.Coord { Latitude = sensorDatabase.Latitude, Longitude = sensorDatabase.Longitude },
@@ -60,7 +62,7 @@ namespace Topic_Manager.Controllers
                 using (var producer = new ProducerMessage<byte[]>(messages, sensorDatabase.TopicName, kafkaConnectionString))
                 {
                     var messageInformations = await producer.Run();
-                    Debug.WriteLine(messageInformations);
+                    Console.WriteLine($"### message send: {messageInformations} - " + DateTime.Now.ToString() + "###");
                     producer.Dispose();
                 }
                 Console.WriteLine("### Finish producer message for Kafka - " + DateTime.Now.ToString() + "###");
