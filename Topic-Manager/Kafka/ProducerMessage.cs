@@ -30,6 +30,7 @@ namespace Topic_Manager.Kafka
                 Value = Value,
                 Key = "TESTE"
             });
+            p.Dispose();
 
             return $"Mensagem enviada com sucesso: {dr.Value} | Partition: {dr.Partition} | {dr.Topic}";
         }

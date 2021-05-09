@@ -51,7 +51,9 @@ namespace Topic_Manager.Controllers
                 {
                     var messageInformations = await producer.Run();
                     Debug.WriteLine(messageInformations);
-                }
+                    producer.Dispose();
+                }                
+
                 return Ok(payload);
             }
             catch (Exception e)
