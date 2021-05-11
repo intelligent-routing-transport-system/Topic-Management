@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Renci.SshNet;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -22,8 +23,17 @@ namespace Topic_Manager.Controllers
 
         [HttpGet]
         public async Task<List<Sensor>> GetSensors()
-        { 
-            return _uof.SensorRepository.Get().ToList();
+        {
+            PrivateKeyFile keyFiles = new PrivateKeyFile(@"C:\Users\gusta\Documents\AWS\br-key-pair-tcc.pem.pem");
+
+            try
+            {
+                return _uof.SensorRepository.Get().ToList();
+            }
+            catch (Exception e)
+            {
+                throw;
+            }
         }
 
         [HttpPost]
