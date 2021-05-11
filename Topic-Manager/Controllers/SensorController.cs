@@ -24,8 +24,6 @@ namespace Topic_Manager.Controllers
         [HttpGet]
         public async Task<List<Sensor>> GetSensors()
         {
-            PrivateKeyFile keyFiles = new PrivateKeyFile(@"C:\Users\gusta\Documents\AWS\br-key-pair-tcc.pem.pem");
-
             try
             {
                 return _uof.SensorRepository.Get().ToList();
